@@ -1,0 +1,17 @@
+# VS code settings
+.vscode
+
+# venv
+venv/
+
+# Build and Dist
+build/
+
+# C and pyd generate files
+*.c
+*.pyd
+*.pyc
+
+# Cache data
+__pycache__
+*_cache
