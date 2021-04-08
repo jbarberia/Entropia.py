@@ -63,3 +63,12 @@ def test_weight_00():
     e = entropia.weight_entropy(x)
 
     assert abs(e - 0.9801) <= tol
+
+
+def test_CH_00():
+    x = [4, 7, 9, 10, 6, 11, 3]
+    e, jsd, cjs = entropia.complexity_entropy(x)
+
+    assert abs(e - 0.5888) <= tol
+    assert abs(jsd - 0.2235) <= tol
+    assert abs(cjs - 0.2900) <= tol

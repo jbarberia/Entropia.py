@@ -73,3 +73,20 @@ def renyi_entropy(list x, int q=1, int m=3, int t=1):
         return bandt_and_pompe(x, m, t)
     y = ordinal_patterns(x, m, t)
     return log2(sum(x**q for x in y)) / (1-q)
+
+
+def complexity_entropy(list x, int m=3, int t=1):
+    n = factorial(m)
+    op = ordinal_patterns(x, m, t)
+    h1 = -sum(y * log(y) for y in op)
+
+    Q = - 1 / ((0.5+0.5/n)*log(0.5+(0.5/n)) + (0.5/n)*log(0.5/n)*(n-1) + 0.5*log(n))
+    
+    op2 = [(0.5*y + 0.5/n) for y in op] + ([0.5/n] * (n - len(op))) # Concatenacion de listas
+    h2 = -sum(x * log(x) for x in op2)
+
+    JSD = h2 - 0.5*h1 - 0.5*log(n)
+    comp_JS = Q * JSD * h1/log(n)
+
+    return (h1/log(n), JSD, comp_JS)
+

@@ -12,7 +12,7 @@ ext_modules = [
 
 setup(
     name = 'entropia',
-    version = 0.1,
+    version = '0.2',
     author = "Barberia Juan Luis",
     author_email = "jbarberia@frba.utn.edu.ar",
     cmdclass = {'build_ext': build_ext},
