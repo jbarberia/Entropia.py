@@ -1,10 +1,9 @@
-from numpy.math import factorial, log, log2
+from math import factorial, log, log2
 import numpy as np
 
 
 def ordinal_patterns(x, m=3, t=1):
     """Devuelve un vector ponderado de probabilidades de cada patron posible"""
-    x = np.array(x)
 
     # Genero las particiones
     tmp = np.zeros((x.shape[0], m))
@@ -27,7 +26,6 @@ def ordinal_patterns(x, m=3, t=1):
 
 def weight_patterns(x, m=3, t=1):
     """Devuelve un vector ponderado de probabilidades de cada patron posible"""
-    x = np.array(x)
 
     # Genero las particiones
     tmp = np.zeros((x.shape[0], m))
@@ -63,7 +61,7 @@ def _hash(x):
     m, n = x.shape
     if n == 1:
         return np.zeros(m)
-    return np.sum(np.apply_along_axis(lambda y: y < x[:, 0], 0, x), axis=1) * factorial(n-1) + hash(x[:, 1:]) 
+    return np.sum(np.apply_along_axis(lambda y: y < x[:, 0], 0, x), axis=1) * factorial(n-1) + _hash(x[:, 1:]) 
 
 
 def weight_entropy(x, m=3, t=1):
