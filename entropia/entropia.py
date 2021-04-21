@@ -99,6 +99,18 @@ def bandt_and_pompe_normal(x, m=3, t=1):
     return bandt_and_pompe(x, m, t) / log2(factorial(m))
 
 
+def min_entropy(x, m=3, t=1):
+    """Min entropia
+    
+    arguments:
+    x -- [list]: Senal a analizar
+    m -- [int]: Dimension de embedding
+    t -- [int]: Delay de muestreo
+    """
+    y = ordinal_patterns(x, m, t).max()
+    return - np.log(y)
+
+
 def renyi_entropy(x, q=1, m=3, t=1):
     """Entropia de renyi
     
@@ -112,6 +124,21 @@ def renyi_entropy(x, q=1, m=3, t=1):
         return bandt_and_pompe(x, m, t)
     y = ordinal_patterns(x, m, t)
     return log2(sum(x**q for x in y)) / (1-q)
+
+
+def tsallis_entropy(x, q=1, m=3, t=1):
+    """Entropia de renyi
+    
+    arguments:
+    x -- [list]: Senal a analizar
+    q -- [int]: Exponente
+    m -- [int]: Dimension de embedding
+    t -- [int]: Delay de muestreo
+    """
+    if q == 1:
+        return bandt_and_pompe(x, m, t)
+    y = ordinal_patterns(x, m, t)
+    return - (1 - sum(x**q))/(1-q)
 
 
 def complexity_entropy(x, m=3, t=1):

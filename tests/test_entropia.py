@@ -56,15 +56,18 @@ def test_bandt_normal_02():
 # Análisis de señales basado en herramientas entrópicas y optimización en los planos informacionales.
 # UTN-FRBA
 
+def test_min_00():
+    e = entropia.min_entropy(x, m=2)
+    assert abs(e - 0.4055) <= tol
+
+
 def test_weight_00():
     e = entropia.weight_entropy(x)
-
     assert abs(e - 0.2357) <= tol
 
 
 def test_CH_00():
     e, jsd, cjs = entropia.complexity_entropy(x)
-
     assert abs(e - 0.5888) <= tol
     assert abs(jsd - 0.2235) <= tol
     assert abs(cjs - 0.2900) <= tol
