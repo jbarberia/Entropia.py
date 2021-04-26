@@ -1,9 +1,46 @@
-from math import factorial, log, log2
+from math import factorial, log, log2 
+from collections import Counter
 import numpy as np
+
+def improve_ordinal_patterns(x, l=4, m=3, t=1):
+    """Devuelve un vector de probabilidades para cada patron posible (Mapeo extendido), l es el nivel de discretizacion"""
+
+    # Genero las particiones
+    tmp = np.zeros((x.shape[0], m))
+    for i in range(m):
+        tmp[:, i] = np.roll(x, i*t)
+    partition = tmp[(t*m-1):, :]
+
+    patterns = uq(x, partition, l)
+    count = Counter(patterns)
+
+    summa = sum(count.values())
+    return np.array([x/summa for x in count.values()])
+
+
+def uq(x, partition, l):
+    x_min = x.min()
+    x_max = x.max()
+
+    delta = (x_max + x_min) / l
+
+    patterns = []
+    for part in partition:
+        pattern = []
+        for element in part:
+            for i in range(0, l):
+                lb = x_min if (i == 0) else delta * i
+                ub = x_max + delta if (i+1 == l) else (delta * (i + 1) if (lb < delta * (i+1)) else lb + delta) 
+
+                if lb <= element < ub:
+                    pattern.append(i)
+                    break
+        patterns.append(tuple(pattern))
+    return patterns
 
 
 def ordinal_patterns(x, m=3, t=1):
-    """Devuelve un vector ponderado de probabilidades de cada patron posible"""
+    """Devuelve un vector de probabilidades de cada patron posible"""
 
     # Genero las particiones
     tmp = np.zeros((x.shape[0], m))

@@ -6,6 +6,8 @@ venv/
 
 # Build and Dist
 build/
+dist/
+*.egg*
 
 # C and pyd generate files
 *.c

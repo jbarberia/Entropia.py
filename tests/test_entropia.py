@@ -71,3 +71,39 @@ def test_CH_00():
     assert abs(e - 0.5888) <= tol
     assert abs(jsd - 0.2235) <= tol
     assert abs(cjs - 0.2900) <= tol
+
+
+def test_IPE_00():
+    values = [1, 1.1, 3]
+    x = np.array(values)
+    partition = np.array([values])
+
+    pattern = entropia.uq(x, partition, l=3)[0]
+    assert pattern == (0, 0, 2)
+
+
+def test_IPE_01():
+    values = [1.9, 1, 2.1, 4]
+    x = np.array(values)
+    partition = np.array([values])
+
+    pattern = entropia.uq(x, partition, l=3)[0]
+    assert pattern == (1, 0, 1, 2)
+
+
+def test_IPE_02():
+    values = [1, 2.9, 3]
+    x = np.array(values)
+    partition = np.array([values])
+
+    pattern = entropia.uq(x, partition, l=3)[0]
+    assert pattern == (0, 2, 2)
+
+
+def test_IPE_03():
+    values = [1, 1.1, 1.2]
+    x = np.array(values)
+    partition = np.array([values])
+
+    pattern = entropia.uq(x, partition, l=3)[0]
+    assert pattern == (0, 0, 0)
