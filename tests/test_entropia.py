@@ -11,12 +11,12 @@ x = np.array([4, 7, 9, 10, 6, 11, 3])
 # Christoph Bandt and Bernd Pompe
 
 def test_bandt_00():
-    e = entropia.bandt_and_pompe(x, m=2)
+    e = entropia.shannon(x, m=2)
     assert abs(e - 0.918) <= tol
 
 
 def test_bandt_01():
-    e = entropia.bandt_and_pompe(x, m=3)
+    e = entropia.shannon(x, m=3)
     assert abs(e - 1.522) <= tol
 
 
@@ -29,7 +29,7 @@ def test_bandt_normal_00():
     time = [i/n for i in range(n)]
     x = np.array([sin(2*pi*500*t) for t in time])
 
-    e = entropia.bandt_and_pompe_normal(x, m=6)
+    e = entropia.shannon_normal(x, m=6)
     assert abs(e - 0.3755) <= tol
 
 
@@ -38,7 +38,7 @@ def test_bandt_normal_01():
     time = [i/n for i in range(n)]
     x = np.array([sin(2*pi*15*t) for t in time])
 
-    e = entropia.bandt_and_pompe_normal(x, m=6)
+    e = entropia.shannon_normal(x, m=6)
     assert abs(e - 0.1579) <= tol
 
 
@@ -47,7 +47,7 @@ def test_bandt_normal_02():
     time = [i/n for i in range(n)]
     x = np.array([(1+0.5*sin(2*pi*5*t))*(sin(2*pi*50*t**2+2*pi*10*t)) for t in time])
 
-    e = entropia.bandt_and_pompe_normal(x, m=6)
+    e = entropia.shannon_normal(x, m=6)
     assert abs(e - 0.2625) <= tol
 
 
@@ -62,8 +62,8 @@ def test_min_00():
 
 
 def test_weight_00():
-    e = entropia.weight_entropy(x)
-    assert abs(e - 0.2357) <= tol
+    e = entropia.shannon(x, pattern="w")
+    assert abs(e - 1.4142) <= tol
 
 
 def test_CH_00():
@@ -78,7 +78,7 @@ def test_IPE_00():
     x = np.array(values)
     partition = np.array([values])
 
-    pattern = entropia.uq(x, partition, l=3)[0]
+    pattern = entropia.patterns.uq(x, partition, l=3)[0]
     assert pattern == (0, 0, 2)
 
 
@@ -87,7 +87,7 @@ def test_IPE_01():
     x = np.array(values)
     partition = np.array([values])
 
-    pattern = entropia.uq(x, partition, l=3)[0]
+    pattern = entropia.patterns.uq(x, partition, l=3)[0]
     assert pattern == (1, 0, 1, 2)
 
 
@@ -96,7 +96,7 @@ def test_IPE_02():
     x = np.array(values)
     partition = np.array([values])
 
-    pattern = entropia.uq(x, partition, l=3)[0]
+    pattern = entropia.patterns.uq(x, partition, l=3)[0]
     assert pattern == (0, 2, 2)
 
 
@@ -105,5 +105,5 @@ def test_IPE_03():
     x = np.array(values)
     partition = np.array([values])
 
-    pattern = entropia.uq(x, partition, l=3)[0]
+    pattern = entropia.patterns.uq(x, partition, l=3)[0]
     assert pattern == (0, 0, 0)
